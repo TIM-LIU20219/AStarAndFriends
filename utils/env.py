@@ -15,9 +15,13 @@ class Env:
         dof: available directions of movement, typically 4 and 8
         '''
         # todo: wrap these parameters into a config file
-        x_size = 51
-        y_size = 51
-        obs_pos = ((5,10),(20,15))
+        x_size = 31
+        y_size = 31
+        # obs_pos = ((5,10),(20,15))
+        # x_size = 5
+        # y_size = 5
+        obs_pos = ((3, 4), (5, 6),(5,10),(20,15))
+        
         dof = 8
         # map size
         self.x_size = x_size  

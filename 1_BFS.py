@@ -32,7 +32,6 @@ class BFS:
         :param s: state
         :return: neighbors
         """
-        # return [(s[0] + u[0], s[1] + u[1]) for u in self.env.motions]
         l = list()
         for move in self.env.motions:
             if (s[0] + move[0], s[1] + move[1]) not in self.env.obs:
