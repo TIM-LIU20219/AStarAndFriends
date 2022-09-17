@@ -109,7 +109,7 @@ class Plotting:
         else:
             plt.plot(path_x, path_y, linewidth='3', color=cl)
 
-        plt.plot(self.start[0], self.start[1], "bs")
+        plt.plot(self.start[0], self.start[1], "rs")
         plt.plot(self.goal[0], self.goal[1], "gs")
 
         plt.pause(0.01)
