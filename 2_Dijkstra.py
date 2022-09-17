@@ -69,7 +69,7 @@ class Djikstra():
         calculate distance between 2 nodes
         in grid space, use Euclidian distance
         param: 2 nodes
-        return: Euclidian distance
+        return: Euclidian distance or Manhattan ditance
         '''
         if nA in self.env.obs or nB in self.env.obs:
             return inf
