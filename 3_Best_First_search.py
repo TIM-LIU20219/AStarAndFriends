@@ -32,6 +32,26 @@ class BestFirstSearch():
         else:
             return abs(p[0] - self.goal[0]) + abs((p[1] - self.goal[1]))
 
+    
+    # def get_path(self):
+    #     '''
+    #     construct the selected path from the search function
+    #     params: none
+    #     return: update self.path
+    #     '''
+    #     cur = self.goal
+    #     max_iter = 10000;
+    #     while cur != self.start:
+    #         self.path.append(cur)
+    #         cur = self.parent[cur] # iterate until reaching the start
+    #         max_iter -= 1
+    #         if max_iter < 0:
+    #             print("Failed with loop path!")
+    #             break
+    #     self.path.reverse() # note that the constructed path is from goal to start, in reverse order
+    #     print("path found!")
+    
+
     def get_path(self):
         '''
         construct the selected path from the search function
@@ -39,16 +59,12 @@ class BestFirstSearch():
         return: update self.path
         '''
         cur = self.goal
-        max_iter = 10000;
         while cur != self.start:
             self.path.append(cur)
-            cur = self.parent[cur] # iterate until reaching the start
-            max_iter -= 1
-            if max_iter < 0:
-                print("Failed with loop path!")
-                break
-        self.path.reverse() # note that the constructed path is from goal to start, in reverse order
-        print("path found!")
+            cur = self.parent[cur]
+        self.path.reverse() 
+
+
     def get_neighbor(self, s):
         """
         find neighbors of state s that not in obstacles.
@@ -89,13 +105,19 @@ class BestFirstSearch():
                     
 def main():
     planner = BestFirstSearch()
-    t_start = time.time()
-    path, visited = planner.search();
-    t_end = time.time();
-    if planner.found:
+    name = "Best-first Search"
+    
+    if planner.env.MonteCarlo:
+        t_start = time.time()
+        for _ in range(planner.env.repeat_times):
+            path, visited = planner.search();
+            planner = BestFirstSearch()
+        t_end = time.time(); 
+        print(name + " Duration of repeating " + str(planner.env.repeat_times) + " times is: " + str(t_end - t_start))
+    if planner.env.animation:
+        path, visited = planner.search();
         draw = plotting.Plotting(planner.start, planner.goal)
-        draw.animation(path, visited, "BestFirstSearch")
-    print(t_end - t_start)
+        draw.animation(path, visited, name)
 
 if __name__=="__main__":
     main()            

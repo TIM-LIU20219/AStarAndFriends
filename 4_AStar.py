@@ -8,7 +8,7 @@ from queue import PriorityQueue
 from utils import env, plotting
 
 
-class BestFirstSearch():
+class AStar():
     def __init__(self, type = "Euclidian") -> None:
         self.frontier = PriorityQueue()
         self.parent = dict()
@@ -48,7 +48,7 @@ class BestFirstSearch():
                 print("Failed with loop path!")
                 break
         self.path.reverse() # note that the constructed path is from goal to start, in reverse order
-        print("path found!")
+        # print("path found!")
     def get_neighbor(self, s):
         """
         find neighbors of state s that not in obstacles.
@@ -62,7 +62,6 @@ class BestFirstSearch():
         return l
     
     def search(self):
-
         while not self.frontier.empty():
             cur_node = self.frontier.get()
             cur_node = cur_node[1]
@@ -88,14 +87,20 @@ class BestFirstSearch():
             return None, None
                     
 def main():
-    planner = BestFirstSearch()
-    t_start = time.time()
-    path, visited = planner.search();
-    t_end = time.time();
-    if planner.found:
+    planner = AStar()
+    name = "AStar"
+    
+    if planner.env.MonteCarlo:
+        t_start = time.time()
+        for _ in range(planner.env.repeat_times):
+            path, visited = planner.search();
+            planner = AStar()
+        t_end = time.time(); 
+        print(name + " Duration of repeating " + str(planner.env.repeat_times) + " times is: " + str(t_end - t_start))
+    if planner.env.animation:
+        path, visited = planner.search();
         draw = plotting.Plotting(planner.start, planner.goal)
-        draw.animation(path, visited, "AStar")
-    print(t_end - t_start)
+        draw.animation(path, visited, name)
 
 if __name__=="__main__":
     main()            

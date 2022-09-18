@@ -17,7 +17,8 @@ class Plotting:
     def __init__(self, start, goal):
         self.start, self.goal = start, goal
         self.env = env.Env()
-        self.obs = self.env.obs_map()
+        # self.obs = self.env.fill_obs()
+        self.obs = self.env.obs
 
     def update_obs(self, obs):
         self.obs = obs # obs is a set containg coordinates of obstacles from env.py

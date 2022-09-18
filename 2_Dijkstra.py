@@ -89,15 +89,23 @@ class Djikstra():
             self.path.append(cur)
             cur = self.parent[cur] # iterate until reaching the start
         self.path.reverse() # note that the constructed path is from goal to start, in reverse order
-        print("path found!")
+        # print("path found!")
+
 def main():
     planner = Djikstra()
-    t_start = time.time()
-    path, visited = planner.search();
-    t_end = time.time();
-    draw = plotting.Plotting(planner.start, planner.goal)
-    draw.animation(path, visited, "BFS")
-    print(t_end - t_start)
+    name = "Djikstra"
+    
+    if planner.env.MonteCarlo:
+        t_start = time.time()
+        for _ in range(planner.env.repeat_times):
+            path, visited = planner.search();
+            planner = Djikstra()
+        t_end = time.time();
+        print(name + " Duration of repeating " + str(planner.env.repeat_times) + " times is: " + str(t_end - t_start))
+    if planner.env.animation:
+        path, visited = planner.search();
+        draw = plotting.Plotting(planner.start, planner.goal)
+        draw.animation(path, visited, name)
 
 if __name__=="__main__":
     main()
